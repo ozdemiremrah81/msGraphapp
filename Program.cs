@@ -1,28 +1,22 @@
-﻿var scopes = new[] { "User.Read" };
+﻿using Azure.Identity;
+using Microsoft.Graph;
+using Microsoft.Graph.Models;
+using System.Linq; // Ensure you add this for the LINQ methods
 
-// Multi-tenant apps can use "common",
-// single-tenant apps must use the tenant ID from the Azure portal
-var tenantId = "common";
+var scopes = new[] { "User.Read" };
 
-// Value from app registration
-var clientId = "YOUR_CLIENT_ID";
-
-// using Azure.Identity;
-var options = new TokenCredentialOptions
+var interactiveBrowserCredential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions
 {
-    AuthorityHost = AzureAuthorityHosts.AzurePublicCloud
-};
+    TenantId = "TenantID",
+    ClientId = "ClientID",
+});
 
-// Callback function that receives the user prompt
-// Prompt contains the generated device code that you must
-// enter during the auth process in the browser
-Func<DeviceCodeInfo, CancellationToken, Task> callback = (code, cancellation) => {
-    Console.WriteLine(code.Message);
-    return Task.FromResult(0);
-};
+var graphClient = new GraphServiceClient(interactiveBrowserCredential, scopes);
 
-// /dotnet/api/azure.identity.devicecodecredential
-var deviceCodeCredential = new DeviceCodeCredential(
-    callback, tenantId, clientId, options);
+// Get the user's profile (GET https://graph.microsoft.com/v1.0/me)
+var user = await graphClient.Me.GetAsync();
 
-var graphClient = new GraphServiceClient(deviceCodeCredential, scopes);
+Console.WriteLine($"User: {user.DisplayName}");
+Console.WriteLine($"{user.CreatedDateTime}");
+// Get the user's messages (GET https://graph.microsoft.com/v1.0/me/messages)
+// Applying the filter, select, and order by directly on the fluent API.

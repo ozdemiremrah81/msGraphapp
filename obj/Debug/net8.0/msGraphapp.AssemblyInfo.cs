@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("msGraphapp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49d3a51e90d2415ca1fb33e9018573e183c79eb9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae85019c9202189eb856c7aa407590aee746169f")]
 [assembly: System.Reflection.AssemblyProductAttribute("msGraphapp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("msGraphapp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
